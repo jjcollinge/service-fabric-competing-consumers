@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ApplicationManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ApplicationTypeName="ElasticScaleDemoType" ApplicationTypeVersion="1.0.0" xmlns="http://schemas.microsoft.com/2011/01/fabric">
+  <Parameters>
+    <Parameter Name="ManagementUI_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="ProducerManager_MinReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="ProducerManager_PartitionCount" DefaultValue="1" />
+    <Parameter Name="ProducerManager_TargetReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="WorkerManager_MinReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="WorkerManager_PartitionCount" DefaultValue="1" />
+    <Parameter Name="WorkerManager_TargetReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="ConfigManager_MinReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="ConfigManager_PartitionCount" DefaultValue="1" />
+    <Parameter Name="ConfigManager_TargetReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="ManagementAPI_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="Producer_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="DataSource_MinReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="DataSource_PartitionCount" DefaultValue="1" />
+    <Parameter Name="DataSource_TargetReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="Worker_InstanceCount" DefaultValue="-1" />
+  </Parameters>
+  <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
+       should match the Name and Version attributes of the ServiceManifest element defined in the 
+       ServiceManifest.xml file. -->
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="ManagementUIPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="ProducerManagerPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="WorkerManagerPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="ConfigManagerPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="ManagementAPIPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="ProducerPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="DataSourcePkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="WorkerPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+  </ServiceManifestImport>
+  <DefaultServices>
+    <!-- The section below creates instances of service types, when an instance of this 
+         application type is created. You can also create one or more instances of service type using the 
+         ServiceFabric PowerShell module.
+         
+         The attribute ServiceTypeName below must match the name defined in the imported ServiceManifest.xml file. -->
+    <Service Name="ManagementUI">
+      <StatelessService ServiceTypeName="ManagementUIType" InstanceCount="[ManagementUI_InstanceCount]">
+        <SingletonPartition />
+      </StatelessService>
+    </Service>
+    <Service Name="ProducerManager">
+      <StatefulService ServiceTypeName="ProducerManagerType" TargetReplicaSetSize="[ProducerManager_TargetReplicaSetSize]" MinReplicaSetSize="[ProducerManager_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[ProducerManager_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+      </StatefulService>
+    </Service>
+    <Service Name="WorkerManager">
+      <StatefulService ServiceTypeName="WorkerManagerType" TargetReplicaSetSize="[WorkerManager_TargetReplicaSetSize]" MinReplicaSetSize="[WorkerManager_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[WorkerManager_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+      </StatefulService>
+    </Service>
+    <Service Name="ConfigManager">
+      <StatefulService ServiceTypeName="ConfigManagerType" TargetReplicaSetSize="[ConfigManager_TargetReplicaSetSize]" MinReplicaSetSize="[ConfigManager_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[ConfigManager_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+      </StatefulService>
+    </Service>
+    <Service Name="ManagementAPI">
+      <StatelessService ServiceTypeName="ManagementAPIType" InstanceCount="[ManagementAPI_InstanceCount]">
+        <SingletonPartition />
+      </StatelessService>
+    </Service>
+    <Service Name="DataSource">
+      <StatefulService ServiceTypeName="DataSourceType" TargetReplicaSetSize="[DataSource_TargetReplicaSetSize]" MinReplicaSetSize="[DataSource_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[DataSource_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+      </StatefulService>
+    </Service>
+  </DefaultServices>
+</ApplicationManifest>

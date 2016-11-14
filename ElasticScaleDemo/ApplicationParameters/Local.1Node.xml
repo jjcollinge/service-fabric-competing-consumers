@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="fabric:/ElasticScaleDemo" xmlns="http://schemas.microsoft.com/2011/01/fabric">
+  <Parameters>
+    <Parameter Name="ManagementUI_InstanceCount" Value="1" />
+    <Parameter Name="ProducerManager_PartitionCount" Value="1" />
+    <Parameter Name="ProducerManager_MinReplicaSetSize" Value="1" />
+    <Parameter Name="ProducerManager_TargetReplicaSetSize" Value="1" />
+    <Parameter Name="WorkerManager_PartitionCount" Value="1" />
+    <Parameter Name="WorkerManager_MinReplicaSetSize" Value="1" />
+    <Parameter Name="WorkerManager_TargetReplicaSetSize" Value="1" />
+    <Parameter Name="ConfigManager_PartitionCount" Value="1" />
+    <Parameter Name="ConfigManager_MinReplicaSetSize" Value="1" />
+    <Parameter Name="ConfigManager_TargetReplicaSetSize" Value="1" />
+    <Parameter Name="ManagementAPI_InstanceCount" Value="1" />
+    <Parameter Name="Producer_InstanceCount" Value="1" />
+    <Parameter Name="DataSource_PartitionCount" Value="1" />
+    <Parameter Name="DataSource_MinReplicaSetSize" Value="1" />
+    <Parameter Name="DataSource_TargetReplicaSetSize" Value="1" />
+    <Parameter Name="Worker_InstanceCount" Value="1" />
+  </Parameters>
+</Application>

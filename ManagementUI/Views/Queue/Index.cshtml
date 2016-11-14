@@ -1,0 +1,159 @@
+﻿@{
+    ViewData["Title"] = "Queue";
+}
+
+<div class="container-fluid">
+    <canvas id="queueChart" width="400" height="200"></canvas>
+    <div class="queue" style="margin: 20px;">
+        <span class="queue-title">Queue length:</span>
+        <span class="queue-count" style="font-weight: 700;">0</span>
+    </div>
+    <div class="worker" style="margin: 20px;">
+        <span class="worker-title">Number of workers:</span>
+        <span class="worker-count" style="font-weight: 700">0</span>
+        <div style="margin-top: 10px;">
+            <button class="worker-add btn-info" style="margin: 0px 10px" onclick="sendRequest('POST', 'http://localhost:8665/api/worker')">
+                Add
+            </button>
+            <button class="worker-remove btn-danger" style="margin: 0px 10px" onclick="sendRequest('DELETE', 'http://localhost:8665/api/worker')">
+                Remove
+            </button>
+        </div>
+    </div>
+    <div class="producer" style="margin: 20px;">
+        <span class="producer-title">Number of producers:</span>
+        <span class="producer-count" style="font-weight:700">0</span>
+        <div style="margin-top: 10px;">
+            <button class="producer-add btn-info" style="margin: 0px 10px" onclick="sendRequest('POST', 'http://localhost:8665/api/producer')">
+                Add
+            </button>
+            <button class="producer-remove  btn-danger" style="margin: 0px 10px" onclick="sendRequest('DELETE', 'http://localhost:8665/api/producer')">
+                Remove
+            </button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.js"></script>
+    <script>
+        var options = {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+        var data = {
+            labels: [0],
+            datasets: [
+                {
+                    label: "Queue length",
+                    fill: false,
+                    lineTension: 0.1,
+                    backgroundColor: "rgba(75,192,192,0.4)",
+                    borderColor: "rgba(75,192,192,1)",
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: "rgba(75,192,192,1)",
+                    pointBackgroundColor: "#fff",
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                    pointHoverBorderColor: "rgba(220,220,220,1)",
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: [],
+                    spanGaps: false,
+                }
+            ]
+        };
+        var ctx = $("#queueChart");
+        var myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: data,
+            options: options
+        });
+        
+        var latestLabel = data.labels[0];
+
+        // Called by DOM objects
+        function sendRequest(method, url) {
+            console.log("sendRequest called: " + method + ", " + url);
+            $.ajax({
+                type: method,
+                url: url
+            }).done(function (data) {
+                console.log('Success : ' + data);
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log('Error: ' + errorThrown);
+            });
+        };
+
+        // Update queue count every 2 seconds
+        setInterval(function () {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:8665/api/queue'
+            }).done(function (dataPoint) {
+                console.log('Queue count: ');
+                console.log(dataPoint);
+
+                // Update chart data
+                data.labels.push(++latestLabel);
+                data.datasets[0].data.push(dataPoint);
+
+                // Cap elements
+                if (data.datasets[0].data.length > 10)
+                {
+                    data.datasets[0].data.shift();
+                    data.labels.shift();
+                }
+
+                // Reset chart with new data
+                myLineChart = new Chart(ctx, {
+                    type: 'line',
+                    data: data,
+                    options: options
+                });
+
+                $(".queue-count").text(dataPoint)
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown);
+            });
+        }, 2000);
+
+        // Update worker count every 2 seconds
+        setInterval(function () {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:8665/api/worker'
+            }).done(function (count) {
+                console.log('Worker count: ' + count);
+                $(".worker-count").text(count);
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown);
+            });
+        }, 2000);
+
+        // Update producer count every 2 seconds
+        setInterval(function () {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:8665/api/producer'
+            }).done(function (count) {
+                console.log('Producer count: ' + count);
+                $(".producer-count").text(count);
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown);
+            });
+        }, 2000);
+
+    </script>
+}
