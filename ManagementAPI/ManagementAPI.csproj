@@ -126,6 +126,8 @@
     <Compile Include="ServiceRequestActionFilter.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".bin\git.cmd" />
+    <None Include=".bin\node.cmd" />
     <None Include="PackageRoot\Config\Settings.xml" />
     <None Include="PackageRoot\ServiceManifest.xml" />
     <None Include="App.config" />
