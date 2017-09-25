@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Fabric;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.ServiceFabric.Data.Collections;
-using Microsoft.ServiceFabric.Services.Communication.Runtime;
-using Microsoft.ServiceFabric.Services.Runtime;
-using Microsoft.ServiceFabric.Services.Remoting.Runtime;
-using System.Fabric.Description;
-
-namespace ProducerManager
+﻿namespace ProducerManager
 {
+    using Microsoft.ServiceFabric.Data.Collections;
+    using Microsoft.ServiceFabric.Services.Communication.Runtime;
+    using Microsoft.ServiceFabric.Services.Remoting.Runtime;
+    using Microsoft.ServiceFabric.Services.Runtime;
+    using System;
+    using System.Collections.Generic;
+    using System.Fabric;
+    using System.Fabric.Description;
+    using System.Threading.Tasks;
+
     struct ServiceInfo
     {
         public String ServiceAddress;
@@ -107,10 +105,11 @@ namespace ProducerManager
             var serviceBaseName = "Producer";
             var serviceName = $"{serviceBaseName}{count}";
             var serviceAddress = $"{appName}/{serviceName}";
+            var deleteServiceDescription = new DeleteServiceDescription(new Uri(serviceAddress));
 
             using (var client = new FabricClient())
             {
-                await client.ServiceManager.DeleteServiceAsync(new Uri(serviceAddress));
+                await client.ServiceManager.DeleteServiceAsync(deleteServiceDescription);
             }
 
             return new ServiceInfo

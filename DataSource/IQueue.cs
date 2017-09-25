@@ -1,16 +1,14 @@
-﻿using Microsoft.ServiceFabric.Services.Remoting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DataSource
+﻿namespace DataSource
 {
+    using Microsoft.ServiceFabric.Data;
+    using Microsoft.ServiceFabric.Services.Remoting;
+    using System;
+    using System.Threading.Tasks;
+
     public interface IQueue : IService
     {
         Task EnqueueAsync(String item);
-        Task<String> DequeueAsync();
+        Task<ConditionalValue<String>> TryDequeueAsync();
 
         Task<Int32> GetCountAsync();
     }

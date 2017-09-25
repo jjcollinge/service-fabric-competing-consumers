@@ -10,7 +10,7 @@ using Microsoft.ServiceFabric.Services.Remoting.Runtime;
 using Microsoft.ServiceFabric.Services.Remoting.Client;
 using DataSource;
 using Microsoft.ServiceFabric.Services.Client;
-using Microsoft.ServiceFabric.Data.Collections.Preview;
+using Microsoft.ServiceFabric.Data.Collections;
 
 namespace Worker
 {
@@ -58,14 +58,10 @@ namespace Worker
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
-                try
-                {
-                    var item = await dataSource.DequeueAsync();
-                    ServiceEventSource.Current.Message("Dequeued: {item}");
-                }
-                catch (QueueEmptyException queueException)
-                {
-                    // no op
+                var item = await dataSource.TryDequeueAsync();
+                if (item.HasValue)
+                { 
+                    ServiceEventSource.Current.Message($"Dequeued: {item.Value}");
                 }     
 
                 await Task.Delay(TimeSpan.FromSeconds(_timeToWorkInSeconds));
