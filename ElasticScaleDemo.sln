@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.12
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "ElasticScaleDemo", "ElasticScaleDemo\ElasticScaleDemo.sfproj", "{4F1CDE24-FAF8-4DA0-A6D9-5C757A8F916B}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProducerManager", "ProducerManager\ProducerManager.csproj", "{B18E1235-7642-47C5-8A13-D27E306A482E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManagementUI", "ManagementUI\ManagementUI.csproj", "{B902B230-2FDC-4DAE-ABC1-AFD18A31CDA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigurationManager", "ConfigurationManager\ConfigurationManager.csproj", "{1EFC5852-5463-4D6C-90FE-3361AFD1B085}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,8 +89,17 @@ Global
 		{B902B230-2FDC-4DAE-ABC1-AFD18A31CDA3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B902B230-2FDC-4DAE-ABC1-AFD18A31CDA3}.Release|x64.ActiveCfg = Release|Any CPU
 		{B902B230-2FDC-4DAE-ABC1-AFD18A31CDA3}.Release|x64.Build.0 = Release|Any CPU
+		{1EFC5852-5463-4D6C-90FE-3361AFD1B085}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{1EFC5852-5463-4D6C-90FE-3361AFD1B085}.Debug|x64.ActiveCfg = Debug|x64
+		{1EFC5852-5463-4D6C-90FE-3361AFD1B085}.Debug|x64.Build.0 = Debug|x64
+		{1EFC5852-5463-4D6C-90FE-3361AFD1B085}.Release|Any CPU.ActiveCfg = Release|x64
+		{1EFC5852-5463-4D6C-90FE-3361AFD1B085}.Release|x64.ActiveCfg = Release|x64
+		{1EFC5852-5463-4D6C-90FE-3361AFD1B085}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B0A0DA68-8389-43B5-AC95-C15C81FAA72A}
 	EndGlobalSection
 EndGlobal
