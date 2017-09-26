@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.12
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "ElasticScaleDemo", "ElasticScaleDemo\ElasticScaleDemo.sfproj", "{4F1CDE24-FAF8-4DA0-A6D9-5C757A8F916B}"
 EndProject
@@ -90,5 +90,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B0A0DA68-8389-43B5-AC95-C15C81FAA72A}
 	EndGlobalSection
 EndGlobal

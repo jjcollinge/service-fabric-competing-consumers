@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Fabric;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using Microsoft.ServiceFabric.Data;
 using Microsoft.ServiceFabric.Data.Collections;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
-using Microsoft.ServiceFabric.Services.Runtime;
-using DataSource;
 using Microsoft.ServiceFabric.Services.Remoting.Runtime;
-using Microsoft.ServiceFabric.Data.Collections.Preview;
+using Microsoft.ServiceFabric.Services.Runtime;
+using System;
+using System.Collections.Generic;
+using System.Fabric;
+using System.Threading.Tasks;
 
 namespace DataSource
 {
@@ -24,13 +21,13 @@ namespace DataSource
             : base(context)
         { }
 
-        public async Task<String> DequeueAsync()
+        public async Task<ConditionalValue<String>> TryDequeueAsync()
         {
-            var next = String.Empty;
+            ConditionalValue<string> next = new ConditionalValue<string>(false, string.Empty);
             var queue = await _queue;
             using (var tx = StateManager.CreateTransaction())
             {
-                next = await queue.DequeueAsync(tx);
+                next = await queue.TryDequeueAsync(tx);
                 await tx.CommitAsync();
             }
 

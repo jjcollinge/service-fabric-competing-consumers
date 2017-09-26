@@ -96,10 +96,11 @@ namespace WorkerManager
             var serviceBaseName = "Worker";
             var serviceName = $"{serviceBaseName}{count}";
             var serviceAddress = $"{appName}/{serviceName}";
+            var deleteServiceDescription = new DeleteServiceDescription(new Uri(serviceAddress));
 
             using (var client = new FabricClient())
             {
-                await client.ServiceManager.DeleteServiceAsync(new Uri(serviceAddress));
+                await client.ServiceManager.DeleteServiceAsync(deleteServiceDescription);
             }
 
             return new ServiceInfo
